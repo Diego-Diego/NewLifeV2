@@ -13,11 +13,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Listage de la structure de la base pour local
-CREATE DATABASE IF NOT EXISTS `local` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `local`;
+-- Listage de la structure de la base pour newlifev2
+CREATE DATABASE IF NOT EXISTS `newlifev2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `newlifev2`;
 
--- Listage de la structure de la table local. addon_account
+-- Listage de la structure de la table newlifev2. addon_account
 CREATE TABLE IF NOT EXISTS `addon_account` (
   `name` varchar(60) NOT NULL,
   `label` varchar(100) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `addon_account` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.addon_account : ~4 rows (environ)
+-- Listage des données de la table newlifev2.addon_account : ~4 rows (environ)
 /*!40000 ALTER TABLE `addon_account` DISABLE KEYS */;
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 	('bank_savings', 'Savings account', 0),
@@ -34,7 +34,7 @@ INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 	('society_cardealer', 'Cardealer', 1);
 /*!40000 ALTER TABLE `addon_account` ENABLE KEYS */;
 
--- Listage de la structure de la table local. addon_account_data
+-- Listage de la structure de la table newlifev2. addon_account_data
 CREATE TABLE IF NOT EXISTS `addon_account_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account_name` varchar(100) DEFAULT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `addon_account_data` (
   KEY `index_addon_account_data_account_name` (`account_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.addon_account_data : ~4 rows (environ)
+-- Listage des données de la table newlifev2.addon_account_data : ~4 rows (environ)
 /*!40000 ALTER TABLE `addon_account_data` DISABLE KEYS */;
 INSERT INTO `addon_account_data` (`id`, `account_name`, `money`, `owner`) VALUES
 	(1, 'society_cardealer', 0, NULL),
@@ -54,7 +54,7 @@ INSERT INTO `addon_account_data` (`id`, `account_name`, `money`, `owner`) VALUES
 	(11, 'caution', 0, '467826b1f966aed6683f462c40b5cea8ad5b1a22');
 /*!40000 ALTER TABLE `addon_account_data` ENABLE KEYS */;
 
--- Listage de la structure de la table local. addon_inventory
+-- Listage de la structure de la table newlifev2. addon_inventory
 CREATE TABLE IF NOT EXISTS `addon_inventory` (
   `name` varchar(60) NOT NULL,
   `label` varchar(100) NOT NULL,
@@ -62,14 +62,14 @@ CREATE TABLE IF NOT EXISTS `addon_inventory` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.addon_inventory : ~2 rows (environ)
+-- Listage des données de la table newlifev2.addon_inventory : ~2 rows (environ)
 /*!40000 ALTER TABLE `addon_inventory` DISABLE KEYS */;
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
 	('society_ambulance', 'EMS', 1),
 	('society_cardealer', 'Cardealer', 1);
 /*!40000 ALTER TABLE `addon_inventory` ENABLE KEYS */;
 
--- Listage de la structure de la table local. addon_inventory_items
+-- Listage de la structure de la table newlifev2. addon_inventory_items
 CREATE TABLE IF NOT EXISTS `addon_inventory_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `inventory_name` varchar(100) NOT NULL,
@@ -82,11 +82,11 @@ CREATE TABLE IF NOT EXISTS `addon_inventory_items` (
   KEY `index_addon_inventory_inventory_name` (`inventory_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.addon_inventory_items : ~0 rows (environ)
+-- Listage des données de la table newlifev2.addon_inventory_items : ~0 rows (environ)
 /*!40000 ALTER TABLE `addon_inventory_items` DISABLE KEYS */;
 /*!40000 ALTER TABLE `addon_inventory_items` ENABLE KEYS */;
 
--- Listage de la structure de la table local. banking
+-- Listage de la structure de la table newlifev2. banking
 CREATE TABLE IF NOT EXISTS `banking` (
   `identifier` varchar(46) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
@@ -97,11 +97,11 @@ CREATE TABLE IF NOT EXISTS `banking` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.banking : ~0 rows (environ)
+-- Listage des données de la table newlifev2.banking : ~0 rows (environ)
 /*!40000 ALTER TABLE `banking` DISABLE KEYS */;
 /*!40000 ALTER TABLE `banking` ENABLE KEYS */;
 
--- Listage de la structure de la table local. billing
+-- Listage de la structure de la table newlifev2. billing
 CREATE TABLE IF NOT EXISTS `billing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identifier` varchar(46) DEFAULT NULL,
@@ -113,11 +113,11 @@ CREATE TABLE IF NOT EXISTS `billing` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.billing : ~0 rows (environ)
+-- Listage des données de la table newlifev2.billing : ~0 rows (environ)
 /*!40000 ALTER TABLE `billing` DISABLE KEYS */;
 /*!40000 ALTER TABLE `billing` ENABLE KEYS */;
 
--- Listage de la structure de la table local. cardealer_vehicles
+-- Listage de la structure de la table newlifev2. cardealer_vehicles
 CREATE TABLE IF NOT EXISTS `cardealer_vehicles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle` varchar(255) NOT NULL,
@@ -125,11 +125,11 @@ CREATE TABLE IF NOT EXISTS `cardealer_vehicles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.cardealer_vehicles : ~0 rows (environ)
+-- Listage des données de la table newlifev2.cardealer_vehicles : ~0 rows (environ)
 /*!40000 ALTER TABLE `cardealer_vehicles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cardealer_vehicles` ENABLE KEYS */;
 
--- Listage de la structure de la table local. datastore
+-- Listage de la structure de la table newlifev2. datastore
 CREATE TABLE IF NOT EXISTS `datastore` (
   `name` varchar(60) NOT NULL,
   `label` varchar(100) NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `datastore` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.datastore : ~7 rows (environ)
+-- Listage des données de la table newlifev2.datastore : ~7 rows (environ)
 /*!40000 ALTER TABLE `datastore` DISABLE KEYS */;
 INSERT INTO `datastore` (`name`, `label`, `shared`) VALUES
 	('property', 'Property', 0),
@@ -149,7 +149,7 @@ INSERT INTO `datastore` (`name`, `label`, `shared`) VALUES
 	('user_mask', 'Mask', 0);
 /*!40000 ALTER TABLE `datastore` ENABLE KEYS */;
 
--- Listage de la structure de la table local. datastore_data
+-- Listage de la structure de la table newlifev2. datastore_data
 CREATE TABLE IF NOT EXISTS `datastore_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `datastore_data` (
   KEY `index_datastore_data_name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.datastore_data : ~7 rows (environ)
+-- Listage des données de la table newlifev2.datastore_data : ~7 rows (environ)
 /*!40000 ALTER TABLE `datastore_data` DISABLE KEYS */;
 INSERT INTO `datastore_data` (`id`, `name`, `owner`, `data`) VALUES
 	(6, 'society_ambulance', NULL, '\'{}\''),
@@ -172,7 +172,7 @@ INSERT INTO `datastore_data` (`id`, `name`, `owner`, `data`) VALUES
 	(12, 'user_mask', '467826b1f966aed6683f462c40b5cea8ad5b1a22', '{}');
 /*!40000 ALTER TABLE `datastore_data` ENABLE KEYS */;
 
--- Listage de la structure de la table local. fine_types
+-- Listage de la structure de la table newlifev2. fine_types
 CREATE TABLE IF NOT EXISTS `fine_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(255) DEFAULT NULL,
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `fine_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.fine_types : ~52 rows (environ)
+-- Listage des données de la table newlifev2.fine_types : ~52 rows (environ)
 /*!40000 ALTER TABLE `fine_types` DISABLE KEYS */;
 INSERT INTO `fine_types` (`id`, `label`, `amount`, `category`) VALUES
 	(1, 'Misuse of a horn', 30, 0),
@@ -238,7 +238,7 @@ INSERT INTO `fine_types` (`id`, `label`, `amount`, `category`) VALUES
 	(52, 'Fraud', 2000, 2);
 /*!40000 ALTER TABLE `fine_types` ENABLE KEYS */;
 
--- Listage de la structure de la table local. items
+-- Listage de la structure de la table newlifev2. items
 CREATE TABLE IF NOT EXISTS `items` (
   `name` varchar(50) NOT NULL,
   `label` varchar(50) NOT NULL,
@@ -248,11 +248,11 @@ CREATE TABLE IF NOT EXISTS `items` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.items : ~0 rows (environ)
+-- Listage des données de la table newlifev2.items : ~0 rows (environ)
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 
--- Listage de la structure de la table local. jobs
+-- Listage de la structure de la table newlifev2. jobs
 CREATE TABLE IF NOT EXISTS `jobs` (
   `name` varchar(50) NOT NULL,
   `label` varchar(50) DEFAULT NULL,
@@ -260,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.jobs : ~3 rows (environ)
+-- Listage des données de la table newlifev2.jobs : ~3 rows (environ)
 /*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
 INSERT INTO `jobs` (`name`, `label`, `whitelisted`) VALUES
 	('ambulance', 'EMS', 1),
@@ -268,7 +268,7 @@ INSERT INTO `jobs` (`name`, `label`, `whitelisted`) VALUES
 	('unemployed', 'Chômage', 0);
 /*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 
--- Listage de la structure de la table local. job_grades
+-- Listage de la structure de la table newlifev2. job_grades
 CREATE TABLE IF NOT EXISTS `job_grades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `job_name` varchar(50) DEFAULT NULL,
@@ -281,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `job_grades` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.job_grades : ~9 rows (environ)
+-- Listage des données de la table newlifev2.job_grades : ~9 rows (environ)
 /*!40000 ALTER TABLE `job_grades` DISABLE KEYS */;
 INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, `skin_male`, `skin_female`) VALUES
 	(1, 'unemployed', 0, 'unemployed', 'R.S.A', 500, '{}', '{}'),
@@ -295,14 +295,14 @@ INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, 
 	(44, 'cardealer', 3, 'boss', 'Patron', 0, '{}', '{}');
 /*!40000 ALTER TABLE `job_grades` ENABLE KEYS */;
 
--- Listage de la structure de la table local. licenses
+-- Listage de la structure de la table newlifev2. licenses
 CREATE TABLE IF NOT EXISTS `licenses` (
   `type` varchar(60) NOT NULL,
   `label` varchar(60) NOT NULL,
   PRIMARY KEY (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.licenses : ~8 rows (environ)
+-- Listage des données de la table newlifev2.licenses : ~8 rows (environ)
 /*!40000 ALTER TABLE `licenses` DISABLE KEYS */;
 INSERT INTO `licenses` (`type`, `label`) VALUES
 	('airplane', 'Permis - Avion'),
@@ -315,7 +315,7 @@ INSERT INTO `licenses` (`type`, `label`) VALUES
 	('weapon', 'Permis port armes');
 /*!40000 ALTER TABLE `licenses` ENABLE KEYS */;
 
--- Listage de la structure de la table local. multicharacter_slots
+-- Listage de la structure de la table newlifev2. multicharacter_slots
 CREATE TABLE IF NOT EXISTS `multicharacter_slots` (
   `identifier` varchar(46) NOT NULL,
   `slots` int(11) NOT NULL,
@@ -323,11 +323,11 @@ CREATE TABLE IF NOT EXISTS `multicharacter_slots` (
   KEY `slots` (`slots`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.multicharacter_slots : ~0 rows (environ)
+-- Listage des données de la table newlifev2.multicharacter_slots : ~0 rows (environ)
 /*!40000 ALTER TABLE `multicharacter_slots` DISABLE KEYS */;
 /*!40000 ALTER TABLE `multicharacter_slots` ENABLE KEYS */;
 
--- Listage de la structure de la table local. owned_vehicles
+-- Listage de la structure de la table newlifev2. owned_vehicles
 CREATE TABLE IF NOT EXISTS `owned_vehicles` (
   `owner` varchar(46) DEFAULT NULL,
   `plate` varchar(12) NOT NULL,
@@ -343,11 +343,11 @@ CREATE TABLE IF NOT EXISTS `owned_vehicles` (
   PRIMARY KEY (`plate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.owned_vehicles : ~0 rows (environ)
+-- Listage des données de la table newlifev2.owned_vehicles : ~0 rows (environ)
 /*!40000 ALTER TABLE `owned_vehicles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `owned_vehicles` ENABLE KEYS */;
 
--- Listage de la structure de la table local. ox_inventory
+-- Listage de la structure de la table newlifev2. ox_inventory
 CREATE TABLE IF NOT EXISTS `ox_inventory` (
   `owner` varchar(60) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
@@ -356,11 +356,11 @@ CREATE TABLE IF NOT EXISTS `ox_inventory` (
   UNIQUE KEY `owner` (`owner`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.ox_inventory : ~0 rows (environ)
+-- Listage des données de la table newlifev2.ox_inventory : ~0 rows (environ)
 /*!40000 ALTER TABLE `ox_inventory` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ox_inventory` ENABLE KEYS */;
 
--- Listage de la structure de la table local. rented_vehicles
+-- Listage de la structure de la table newlifev2. rented_vehicles
 CREATE TABLE IF NOT EXISTS `rented_vehicles` (
   `vehicle` varchar(60) NOT NULL,
   `plate` varchar(12) NOT NULL,
@@ -371,11 +371,11 @@ CREATE TABLE IF NOT EXISTS `rented_vehicles` (
   PRIMARY KEY (`plate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.rented_vehicles : ~0 rows (environ)
+-- Listage des données de la table newlifev2.rented_vehicles : ~0 rows (environ)
 /*!40000 ALTER TABLE `rented_vehicles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `rented_vehicles` ENABLE KEYS */;
 
--- Listage de la structure de la table local. society_moneywash
+-- Listage de la structure de la table newlifev2. society_moneywash
 CREATE TABLE IF NOT EXISTS `society_moneywash` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identifier` varchar(46) DEFAULT NULL,
@@ -384,11 +384,11 @@ CREATE TABLE IF NOT EXISTS `society_moneywash` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.society_moneywash : ~0 rows (environ)
+-- Listage des données de la table newlifev2.society_moneywash : ~0 rows (environ)
 /*!40000 ALTER TABLE `society_moneywash` DISABLE KEYS */;
 /*!40000 ALTER TABLE `society_moneywash` ENABLE KEYS */;
 
--- Listage de la structure de la table local. users
+-- Listage de la structure de la table newlifev2. users
 CREATE TABLE IF NOT EXISTS `users` (
   `identifier` varchar(46) NOT NULL,
   `accounts` longtext DEFAULT NULL,
@@ -415,16 +415,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `pincode` int(11) DEFAULT NULL,
   PRIMARY KEY (`identifier`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.users : ~2 rows (environ)
+-- Listage des données de la table newlifev2.users : ~1 rows (environ)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`identifier`, `accounts`, `group`, `inventory`, `job`, `job_grade`, `loadout`, `position`, `firstname`, `lastname`, `dateofbirth`, `sex`, `height`, `skin`, `status`, `is_dead`, `id`, `disabled`, `last_property`, `created_at`, `last_seen`, `phone_number`, `pincode`) VALUES
-	('0c3ea31227c8666028082795ad0274e639c4b197', '{"bank":50200,"black_money":0,"money":0}', 'admin', '[]', 'unemployed', 0, '[]', '{"heading":206.92913818359376,"x":-254.88790893554688,"y":-980.7164916992188,"z":31.217529296875}', 'Oscar', 'Jimenez', '09/12/1993', 'm', 174, '{"ears_1":-1,"torso_1":0,"lipstick_3":0,"beard_1":0,"blush_3":0,"moles_2":0,"jaw_1":0,"nose_5":0,"sun_1":0,"bodyb_4":0,"complexion_1":0,"helmet_2":0,"mask_1":0,"skin_md_weight":50,"eyebrows_4":0,"blush_2":0,"face_md_weight":50,"chin_2":0,"bracelets_2":0,"chest_1":0,"shoes_2":0,"torso_2":0,"beard_2":0,"hair_color_2":0,"neck_thickness":0,"nose_3":0,"watches_1":-1,"chin_1":0,"moles_1":0,"beard_4":0,"bproof_1":0,"blemishes_1":0,"eyebrows_6":0,"nose_2":0,"mom":21,"decals_2":0,"glasses_1":0,"lipstick_1":0,"bodyb_3":-1,"helmet_1":-1,"bags_2":0,"eyebrows_5":0,"beard_3":0,"cheeks_1":0,"dad":0,"eyebrows_3":0,"eyebrows_2":0,"makeup_1":0,"age_1":0,"hair_color_1":0,"makeup_3":0,"eye_squint":0,"chain_2":0,"nose_4":0,"sex":0,"complexion_2":0,"chest_3":0,"bags_1":0,"makeup_2":0,"nose_1":0,"glasses_2":0,"cheeks_3":0,"decals_1":0,"watches_2":0,"ears_2":0,"mask_2":0,"chin_3":0,"chin_4":0,"eyebrows_1":0,"chest_2":0,"jaw_2":0,"lipstick_4":0,"eye_color":0,"blush_1":0,"pants_1":0,"blemishes_2":0,"bodyb_1":-1,"tshirt_2":0,"arms":0,"bracelets_1":-1,"bproof_2":0,"makeup_4":0,"pants_2":0,"lipstick_2":0,"tshirt_1":0,"lip_thickness":0,"chain_1":0,"cheeks_2":0,"sun_2":0,"age_2":0,"nose_6":0,"hair_1":0,"arms_2":0,"shoes_1":0,"hair_2":0,"bodyb_2":0}', '[{"val":979200,"name":"hunger","percent":97.92},{"val":984400,"name":"thirst","percent":98.44000000000001}]', 0, 3, 0, NULL, '2023-03-02 17:16:13', '2023-03-02 18:16:39', NULL, NULL),
-	('467826b1f966aed6683f462c40b5cea8ad5b1a22', '{"money":7500,"black_money":0,"bank":3000}', 'admin', '[{"slot":1,"count":7500,"name":"money"},{"slot":2,"count":5,"name":"water"},{"slot":3,"count":5,"name":"bread"}]', 'unemployed', 0, '[]', '{"x":-1037.037353515625,"heading":240.94488525390626,"z":17.21533203125,"y":-816.6857299804688}', 'Kevin', 'Miller', '09/02/1999', 'm', 160, '{"blush_3":0,"ears_2":0,"beard_3":0,"age_1":0,"complexion_2":0,"helmet_1":-1,"makeup_2":0,"blemishes_2":0,"chain_1":0,"neck_thickness":0,"eyebrows_5":0,"glasses_1":0,"lipstick_4":0,"jaw_2":0,"eyebrows_2":0,"helmet_2":0,"beard_2":0,"bproof_1":0,"nose_1":0,"sun_1":0,"nose_3":0,"bags_1":0,"jaw_1":0,"lip_thickness":0,"chin_4":0,"eyebrows_1":0,"tshirt_1":0,"shoes_2":0,"bracelets_1":-1,"makeup_4":0,"mom":21,"face_md_weight":50,"decals_2":0,"bodyb_2":0,"complexion_1":0,"blemishes_1":0,"ears_1":-1,"makeup_1":0,"moles_2":0,"mask_1":0,"blush_2":0,"arms":0,"sex":0,"pants_2":0,"glasses_2":0,"dad":0,"chest_2":0,"eyebrows_3":0,"shoes_1":0,"decals_1":0,"lipstick_3":0,"eyebrows_6":0,"bracelets_2":0,"lipstick_2":0,"tshirt_2":0,"moles_1":0,"hair_color_1":0,"eyebrows_4":0,"nose_5":0,"cheeks_2":0,"hair_color_2":0,"chin_2":0,"hair_2":0,"chain_2":0,"eye_squint":0,"lipstick_1":0,"pants_1":0,"torso_2":0,"torso_1":0,"beard_4":0,"bodyb_3":-1,"sun_2":0,"watches_1":-1,"chin_1":0,"cheeks_1":0,"watches_2":0,"skin_md_weight":50,"cheeks_3":0,"bodyb_4":0,"eye_color":0,"nose_4":0,"chin_3":0,"bodyb_1":-1,"makeup_3":0,"arms_2":0,"chest_1":0,"chest_3":0,"bags_2":0,"beard_1":0,"bproof_2":0,"nose_2":0,"mask_2":0,"nose_6":0,"age_2":0,"blush_1":0,"hair_1":0}', '[]', 0, 4, 0, NULL, '2023-03-20 21:34:45', '2023-03-20 21:37:43', NULL, NULL);
+	('467826b1f966aed6683f462c40b5cea8ad5b1a22', '{"bank":3000,"black_money":0,"money":7500}', 'admin', '[{"name":"money","count":7500,"slot":1},{"name":"bread","count":5,"slot":2},{"name":"water","count":5,"slot":3}]', 'unemployed', 0, '[]', '{"heading":255.11810302734376,"z":29.2799072265625,"y":-991.2791137695313,"x":-242.09669494628907}', 'Diego', 'Anderson', '09/02/1999', 'm', 160, '{"chin_3":0,"shoes_1":0,"jaw_2":0,"bproof_1":0,"eyebrows_5":0,"blemishes_2":0,"sex":0,"sun_2":0,"eyebrows_1":0,"chain_2":0,"lipstick_2":0,"torso_2":0,"blemishes_1":0,"ears_1":-1,"torso_1":0,"age_1":0,"blush_1":0,"decals_1":0,"makeup_4":0,"bags_2":0,"nose_3":0,"lipstick_1":0,"bracelets_1":-1,"beard_3":0,"eyebrows_4":0,"arms":0,"chin_2":0,"bproof_2":0,"shoes_2":0,"decals_2":0,"helmet_1":-1,"skin_md_weight":50,"chest_2":0,"glasses_2":0,"moles_1":0,"mask_2":0,"nose_5":0,"chest_1":0,"chin_1":0,"lip_thickness":0,"chin_4":0,"eyebrows_2":0,"neck_thickness":0,"chain_1":0,"dad":0,"jaw_1":0,"cheeks_3":0,"makeup_1":0,"arms_2":0,"sun_1":0,"mask_1":0,"age_2":0,"hair_1":0,"chest_3":0,"beard_2":0,"lipstick_3":0,"nose_4":0,"bodyb_4":0,"hair_2":0,"bracelets_2":0,"bodyb_1":-1,"cheeks_2":0,"cheeks_1":0,"lipstick_4":0,"complexion_2":0,"watches_1":-1,"bodyb_2":0,"blush_3":0,"blush_2":0,"bodyb_3":-1,"tshirt_2":0,"nose_2":0,"bags_1":0,"hair_color_2":0,"helmet_2":0,"eye_squint":0,"moles_2":0,"nose_6":0,"tshirt_1":0,"nose_1":0,"face_md_weight":50,"eye_color":0,"complexion_1":0,"pants_1":0,"hair_color_1":0,"beard_4":0,"watches_2":0,"makeup_2":0,"eyebrows_3":0,"pants_2":0,"glasses_1":0,"mom":21,"eyebrows_6":0,"ears_2":0,"makeup_3":0,"beard_1":0}', '{"hunger":940500,"thirst":955375,"drunk":0,"health":200,"armor":0}', 0, 8, 0, NULL, '2023-03-31 20:41:27', '2023-03-31 20:51:56', NULL, NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
--- Listage de la structure de la table local. user_licenses
+-- Listage de la structure de la table newlifev2. user_licenses
 CREATE TABLE IF NOT EXISTS `user_licenses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(60) NOT NULL,
@@ -432,11 +431,11 @@ CREATE TABLE IF NOT EXISTS `user_licenses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.user_licenses : ~0 rows (environ)
+-- Listage des données de la table newlifev2.user_licenses : ~0 rows (environ)
 /*!40000 ALTER TABLE `user_licenses` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_licenses` ENABLE KEYS */;
 
--- Listage de la structure de la table local. vehicles
+-- Listage de la structure de la table newlifev2. vehicles
 CREATE TABLE IF NOT EXISTS `vehicles` (
   `name` varchar(60) NOT NULL,
   `model` varchar(60) NOT NULL,
@@ -444,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
   `category` varchar(60) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.vehicles : ~240 rows (environ)
+-- Listage des données de la table newlifev2.vehicles : ~240 rows (environ)
 /*!40000 ALTER TABLE `vehicles` DISABLE KEYS */;
 INSERT INTO `vehicles` (`name`, `model`, `price`, `category`) VALUES
 	('Blade', 'blade', 15000, 'muscle'),
@@ -689,14 +688,14 @@ INSERT INTO `vehicles` (`name`, `model`, `price`, `category`) VALUES
 	('Hustler', 'hustler', 625000, 'muscle');
 /*!40000 ALTER TABLE `vehicles` ENABLE KEYS */;
 
--- Listage de la structure de la table local. vehicle_categories
+-- Listage de la structure de la table newlifev2. vehicle_categories
 CREATE TABLE IF NOT EXISTS `vehicle_categories` (
   `name` varchar(60) NOT NULL,
   `label` varchar(60) NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.vehicle_categories : ~11 rows (environ)
+-- Listage des données de la table newlifev2.vehicle_categories : ~11 rows (environ)
 /*!40000 ALTER TABLE `vehicle_categories` DISABLE KEYS */;
 INSERT INTO `vehicle_categories` (`name`, `label`) VALUES
 	('compacts', 'Compacts'),
@@ -712,7 +711,7 @@ INSERT INTO `vehicle_categories` (`name`, `label`) VALUES
 	('vans', 'Vans');
 /*!40000 ALTER TABLE `vehicle_categories` ENABLE KEYS */;
 
--- Listage de la structure de la table local. vehicle_sold
+-- Listage de la structure de la table newlifev2. vehicle_sold
 CREATE TABLE IF NOT EXISTS `vehicle_sold` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `client` varchar(50) NOT NULL,
@@ -723,17 +722,17 @@ CREATE TABLE IF NOT EXISTS `vehicle_sold` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table local.vehicle_sold : ~0 rows (environ)
+-- Listage des données de la table newlifev2.vehicle_sold : ~0 rows (environ)
 /*!40000 ALTER TABLE `vehicle_sold` DISABLE KEYS */;
 /*!40000 ALTER TABLE `vehicle_sold` ENABLE KEYS */;
 
--- Listage de la structure de la table local. whitelist
+-- Listage de la structure de la table newlifev2. whitelist
 CREATE TABLE IF NOT EXISTS `whitelist` (
   `identifier` varchar(46) NOT NULL,
   PRIMARY KEY (`identifier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Listage des données de la table local.whitelist : ~0 rows (environ)
+-- Listage des données de la table newlifev2.whitelist : ~0 rows (environ)
 /*!40000 ALTER TABLE `whitelist` DISABLE KEYS */;
 /*!40000 ALTER TABLE `whitelist` ENABLE KEYS */;
 

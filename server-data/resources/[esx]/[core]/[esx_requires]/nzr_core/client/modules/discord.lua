@@ -5,14 +5,14 @@ AddEventHandler('InitClientScript:discord', function()
             local id = GetPlayerServerId(PlayerId())
             local nbPlayerTotal = NZR.GetCountPlayers()
             
-            SetDiscordAppId(1085650163583955105)
+            SetDiscordAppId(1080944786091028642)
             SetRichPresence(PlayerName.." ["..id.."]")
             SetRichPresence("["..id.."]" .. " - ".. nbPlayerTotal .. "/64")
-            SetDiscordRichPresenceAsset('nzr')
-            SetDiscordRichPresenceAssetText('NZR BASE')
+            SetDiscordRichPresenceAsset('discord_logo')
+            SetDiscordRichPresenceAssetText('NewLife')
 
-            SetDiscordRichPresenceAction(0, "🐌 Rejoindre 🐌", "fivem://connect/YourIpHere")
-            SetDiscordRichPresenceAction(1, "🔗 Discord 🔗", "https://discord.gg/xxxx")
+            SetDiscordRichPresenceAction(0, ">> |🐌 Rejoindre 🐌| <<", "fivem://connect/YourIpHere")
+            SetDiscordRichPresenceAction(1, ">> |🔗 Discord 🔗| <<", "https://discord.gg/xxxx")
 
             Citizen.Wait(60000)
         end

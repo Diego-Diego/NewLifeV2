@@ -3,7 +3,7 @@ Config.Locale = GetConvar('esx:locale', 'en')
 
 -- [Config.EnableCommands]
 -- Enables Commands Such As /char and /chardel
-Config.EnableCommands   = true
+Config.EnableCommands   = ESX.GetConfig().EnableDebug
 
 -- EXPERIMENTAL Character Registration Method
 Config.UseDeferrals     = false

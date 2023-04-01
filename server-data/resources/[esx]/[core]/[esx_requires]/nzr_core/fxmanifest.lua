@@ -27,10 +27,3 @@ server_script {
     "server/modules/**/*.lua",
     'server/esx/**/*.lua'
 }
-
-ui_page 'html/index.html'
-
-files {
-	'html/index.html',
-	'html/**/*'
-}
