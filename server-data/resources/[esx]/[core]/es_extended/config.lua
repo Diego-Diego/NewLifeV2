@@ -1,5 +1,5 @@
 Config = {}
-Config.Locale = GetConvar('esx:locale', 'fr')
+Config.Locale = GetConvar('esx:locale', 'en')
 
 Config.Accounts = {
 	bank = {
@@ -16,8 +16,7 @@ Config.Accounts = {
 	}
 }
 
-Config.StartingAccountMoney 	= {money = 7500, bank = 2500}
-Config.StartingItems = {water = 5, bread = 5} -- or nil if you don't want add items first spawn
+Config.StartingAccountMoney 	= {bank = 50000}
 
 Config.DefaultSpawn 			= {x = -269.4, y = -955.3, z = 31.2, heading = 205.8}
 
@@ -26,19 +25,22 @@ Config.EnableSocietyPayouts 	= false -- pay from the society account that the pl
 Config.MaxWeight            	= 24   -- the max inventory weight without backpack
 Config.PaycheckInterval         = 7 * 60000 -- how often to recieve pay checks in milliseconds
 Config.EnableDebug              = false -- Use Debug options?
-Config.EnableDefaultInventory   = true -- Display the default Inventory ( F2 )
+Config.EnableDefaultInventory   = false -- Display the default Inventory ( F2 )
 Config.EnableWantedLevel    	= false -- Use Normal GTA wanted Level?
 Config.EnablePVP                = true -- Allow Player to player combat
 
-Config.Multichar                = false -- Enable support for esx_multicharacter
+Config.Multichar                = GetResourceState("esx_multicharacter") ~= "missing"
 Config.Identity                 = true -- Select a characters identity data before they have loaded in (this happens by default with multichar)
 Config.DistanceGive 			= 4.0 -- Max distance when giving items, weapons etc.
 
-Config.DisableHealthRegeneration  = false -- Player will no longer regenerate health
-Config.DisableVehicleRewards      = false -- Disables Player Recieving weapons from vehicles
-Config.DisableNPCDrops            = false -- stops NPCs from dropping weapons on death
-Config.DisableWeaponWheel         = false -- Disables default weapon wheel
-Config.DisableAimAssist           = false -- disables AIM assist (mainly on controllers)
+Config.DisableHealthRegeneration  = true -- Player will no longer regenerate health
+Config.DisableVehicleRewards      = true -- Disables Player Recieving weapons from vehicles
+Config.DisableNPCDrops            = true -- stops NPCs from dropping weapons on death
+Config.DisableDispatchServices	  = true -- Disable Dispatch services
+Config.DisableScenarios			  = true -- Disable Scenarios
+Config.DisableWeaponWheel         = true -- Disables default weapon wheel
+Config.DisableAimAssist           = true -- disables AIM assist (mainly on controllers)
+Config.DisableVehicleSeatShuff	  = true -- Disables vehicle seat shuff
 Config.RemoveHudCommonents = {
 	[1] = false, --WANTED_STARS,
 	[2] = false, --WEAPON_ICON
@@ -63,14 +65,3 @@ Config.RemoveHudCommonents = {
 	[21] = false, --HUD_COMPONENTS
 	[22] = false, --HUD_WEAPONS
 }
-
-Config.SpawnVehMaxUpgrades = true -- admin vehicles spawn with max vehcle settings
-Config.CustomAIPlates = 'ESX.A111' -- Custom plates for AI vehicles 
--- Pattern string format
---1 will lead to a random number from 0-9.
---A will lead to a random letter from A-Z.
--- . will lead to a random letter or number, with 50% probability of being either.
---^1 will lead to a literal 1 being emitted.
---^A will lead to a literal A being emitted.
---Any other character will lead to said character being emitted.
--- A string shorter than 8 characters will be padded on the right.

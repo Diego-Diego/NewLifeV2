@@ -2,8 +2,6 @@ ESX = {}
 Core = {}
 ESX.PlayerData = {}
 ESX.PlayerLoaded = false
-Core.CurrentRequestId = 0
-Core.ServerCallbacks = {}
 Core.Input = {}
 ESX.UI = {}
 ESX.UI.Menu = {}
@@ -64,22 +62,9 @@ function ESX.SetPlayerData(key, val)
     end
 end
 
-function ESX.Progressbar(message, length, Options)
-    if GetResourceState("esx_progressbar") ~= "missing" then
-        return exports["esx_progressbar"]:Progressbar(message, length, Options)
-    end
-
-    print("[^1ERROR^7] ^5ESX Progressbar^7 is Missing!")
-end
-
 function ESX.ShowNotification(message, type, length)
-    if GetResourceState("esx_notify") ~= "missing" then
-        return exports["esx_notify"]:Notify(type, length, message)
-    end
-
-    print("[^1ERROR^7] ^5ESX Notify^7 is Missing!")
+    TriggerEvent('bcs-notify', message, type, length)
 end
-    
     
 function ESX.TextUI(message, type)
     if GetResourceState("esx_textui") ~= "missing" then
@@ -187,147 +172,6 @@ ESX.RegisterInput = function(command_name, label, input_group, key, on_press, on
     RegisterKeyMapping(on_release ~= nil and "+" .. command_name or command_name, label, input_group, key)
 end
 
-function ESX.TriggerServerCallback(name, cb, ...)
-    local Invoke = GetInvokingResource() or "unknown"
-    Core.ServerCallbacks[Core.CurrentRequestId] = cb
-
-    TriggerServerEvent('esx:triggerServerCallback', name, Core.CurrentRequestId,Invoke, ...)
-    Core.CurrentRequestId = Core.CurrentRequestId < 65535 and Core.CurrentRequestId + 1 or 0
-end
-
-function ESX.UI.Menu.RegisterType(type, open, close)
-    ESX.UI.Menu.RegisteredTypes[type] = {
-        open = open,
-        close = close
-    }
-end
-
-function ESX.UI.Menu.Open(type, namespace, name, data, submit, cancel, change, close)
-    local menu = {}
-
-    menu.type = type
-    menu.namespace = namespace
-    menu.name = name
-    menu.data = data
-    menu.submit = submit
-    menu.cancel = cancel
-    menu.change = change
-
-    menu.close = function()
-
-        ESX.UI.Menu.RegisteredTypes[type].close(namespace, name)
-
-        for i = 1, #ESX.UI.Menu.Opened, 1 do
-            if ESX.UI.Menu.Opened[i] then
-                if ESX.UI.Menu.Opened[i].type == type and ESX.UI.Menu.Opened[i].namespace == namespace and
-                    ESX.UI.Menu.Opened[i].name == name then
-                    ESX.UI.Menu.Opened[i] = nil
-                end
-            end
-        end
-
-        if close then
-            close()
-        end
-
-    end
-
-    menu.update = function(query, newData)
-
-        for i = 1, #menu.data.elements, 1 do
-            local match = true
-
-            for k, v in pairs(query) do
-                if menu.data.elements[i][k] ~= v then
-                    match = false
-                end
-            end
-
-            if match then
-                for k, v in pairs(newData) do
-                    menu.data.elements[i][k] = v
-                end
-            end
-        end
-
-    end
-
-    menu.refresh = function()
-        ESX.UI.Menu.RegisteredTypes[type].open(namespace, name, menu.data)
-    end
-
-    menu.setElement = function(i, key, val)
-        menu.data.elements[i][key] = val
-    end
-
-    menu.setElements = function(newElements)
-        menu.data.elements = newElements
-    end
-
-    menu.setTitle = function(val)
-        menu.data.title = val
-    end
-
-    menu.removeElement = function(query)
-        for i = 1, #menu.data.elements, 1 do
-            for k, v in pairs(query) do
-                if menu.data.elements[i] then
-                    if menu.data.elements[i][k] == v then
-                        table.remove(menu.data.elements, i)
-                        break
-                    end
-                end
-
-            end
-        end
-    end
-
-    ESX.UI.Menu.Opened[#ESX.UI.Menu.Opened + 1] = menu
-    ESX.UI.Menu.RegisteredTypes[type].open(namespace, name, data)
-
-    return menu
-end
-
-function ESX.UI.Menu.Close(type, namespace, name)
-    for i = 1, #ESX.UI.Menu.Opened, 1 do
-        if ESX.UI.Menu.Opened[i] then
-            if ESX.UI.Menu.Opened[i].type == type and ESX.UI.Menu.Opened[i].namespace == namespace and
-                ESX.UI.Menu.Opened[i].name == name then
-                ESX.UI.Menu.Opened[i].close()
-                ESX.UI.Menu.Opened[i] = nil
-            end
-        end
-    end
-end
-
-function ESX.UI.Menu.CloseAll()
-    for i = 1, #ESX.UI.Menu.Opened, 1 do
-        if ESX.UI.Menu.Opened[i] then
-            ESX.UI.Menu.Opened[i].close()
-            ESX.UI.Menu.Opened[i] = nil
-        end
-    end
-end
-
-function ESX.UI.Menu.GetOpened(type, namespace, name)
-    for i = 1, #ESX.UI.Menu.Opened, 1 do
-        if ESX.UI.Menu.Opened[i] then
-            if ESX.UI.Menu.Opened[i].type == type and ESX.UI.Menu.Opened[i].namespace == namespace and
-                ESX.UI.Menu.Opened[i].name == name then
-                return ESX.UI.Menu.Opened[i]
-            end
-        end
-    end
-end
-
-function ESX.UI.Menu.GetOpenedMenus()
-    return ESX.UI.Menu.Opened
-end
-
-function ESX.UI.Menu.IsOpen(type, namespace, name)
-    return ESX.UI.Menu.GetOpened(type, namespace, name) ~= nil
-end
-
 function ESX.UI.ShowInventoryItemNotification(add, item, count)
     SendNUIMessage({
         action = 'inventoryNotification',
@@ -416,6 +260,17 @@ function ESX.Game.SpawnVehicle(vehicle, coords, heading, cb, networked)
     local model = type(vehicle) == 'number' and vehicle or joaat(vehicle)
     local vector = type(coords) == "vector3" and coords or vec(coords.x, coords.y, coords.z)
     networked = networked == nil and true or networked
+
+    local playerCoords = GetEntityCoords(ESX.PlayerData.ped)
+    if not vector or not playerCoords then 
+        return
+    end
+    local dist = #(playerCoords - vector)
+    if dist > 424 then -- Onesync infinity Range (https://docs.fivem.net/docs/scripting-reference/onesync/)
+        local executingResource = GetInvokingResource() or "Unknown"
+        return print(("[^1ERROR^7] Resource ^5%s^7 Tried to spawn vehicle on the client but the position is too far away (Out of onesync range)."):format(executing_resource))
+    end
+
     CreateThread(function()
         ESX.Streaming.RequestModel(model)
 
@@ -1026,293 +881,6 @@ function ESX.Game.Utils.DrawText3D(coords, text, size, font)
     ClearDrawOrigin()
 end
 
-function ESX.ShowInventory()
-    if not Config.EnableDefaultInventory then
-        return
-    end
-
-    local playerPed = ESX.PlayerData.ped
-    local elements = {
-        {unselectable = true, icon = 'fas fa-box', title = 'Player Inventory'}
-    }
-    local currentWeight = 0
-
-    for i=1, #(ESX.PlayerData.accounts) do
-        if ESX.PlayerData.accounts[i].money > 0 then
-            local formattedMoney = TranslateCap('locale_currency', ESX.Math.GroupDigits(ESX.PlayerData.accounts[i].money))
-            local canDrop = ESX.PlayerData.accounts[i].name ~= 'bank'
-
-            elements[#elements+1] = {
-                icon = 'fas fa-money-bill-wave',
-                title = ('%s: <span style="color:green;">%s</span>'):format(ESX.PlayerData.accounts[i].label, formattedMoney),
-                count = ESX.PlayerData.accounts[i].money,
-                type = 'item_account',
-                value = ESX.PlayerData.accounts[i].name,
-                usable = false,
-                rare = false,
-                canRemove = canDrop
-            }
-        end
-    end
-
-    for k, v in ipairs(ESX.PlayerData.inventory) do
-        if v.count > 0 then
-            currentWeight = currentWeight + (v.weight * v.count)
-
-            elements[#elements+1] = {
-                icon = 'fas fa-box',
-                title = ('%s x%s'):format(v.label, v.count),
-                count = v.count,
-                type = 'item_standard',
-                value = v.name,
-                usable = v.usable,
-                rare = v.rare,
-                canRemove = v.canRemove
-            }
-        end
-    end
-
-    for k, v in ipairs(Config.Weapons) do
-        local weaponHash = joaat(v.name)
-
-        if HasPedGotWeapon(playerPed, weaponHash, false) then
-            local ammo, label = GetAmmoInPedWeapon(playerPed, weaponHash)
-
-            if v.ammo then
-                label = ('%s - %s %s'):format(v.label, ammo, v.ammo.label)
-            else
-                label = v.label
-            end
-
-            elements[#elements+1] = {
-                icon = 'fas fa-gun',
-                title = label,
-                count = 1,
-                type = 'item_weapon',
-                value = v.name,
-                usable = false,
-                rare = false,
-                ammo = ammo,
-                canGiveAmmo = (v.ammo ~= nil),
-                canRemove = true
-            }
-        end
-    end
-
-    elements[#elements+1] = {
-        unselectable = true,
-        icon = "fas fa-weight",
-        title = "Current Weight: "..currentWeight
-    }
- 
-    ESX.CloseContext()
-
-    ESX.OpenContext("right", elements, function(menu,element)
-        local player, distance = ESX.Game.GetClosestPlayer()
-
-        elements2 = {}
-
-        if element.usable then
-            elements2[#elements2+1] = {
-                icon = "fas fa-utensils",
-                title = TranslateCap('use'),
-                action = 'use',
-                type = element.type,
-                value = element.value
-            }
-        end
-
-        if element.canRemove then
-            if player ~= -1 and distance <= 3.0 then
-                elements2[#elements2+1] = {
-                    icon = "fas fa-hands",
-                    title = TranslateCap('give'),
-                    action = 'give',
-                    type = element.type,
-                    value = element.value
-                }
-            end
-
-            elements2[#elements2+1] = {
-                icon = "fas fa-trash",
-                title = TranslateCap('remove'),
-                action = 'remove',
-                type = element.type,
-                value = element.value
-            }
-        end
-
-        if element.type == 'item_weapon' and element.canGiveAmmo and element.ammo > 0 and player ~= -1 and distance <= 3.0 then
-            elements2[#elements2+1] = {
-                icon = "fas fa-gun",
-                title = TranslateCap('giveammo'),
-                action = 'give_ammo',
-                type = element.type,
-                value = element.value
-            }
-        end
-
-        elements2[#elements2+1] = {
-            icon = "fas fa-arrow-left",
-            title = TranslateCap('return'),
-            action = 'return'
-        }
-
-        ESX.OpenContext("right", elements2, function(menu2,element2)
-            local item, type = element2.value, element2.type
-
-            if element2.action == "give" then
-                local playersNearby = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 3.0)
-
-                if #playersNearby > 0 then
-                    local players = {}
-                    elements3 = {
-                        {unselectable = true, icon = "fas fa-users", title = "Nearby Players"}
-                    }
-
-                    for k, playerNearby in ipairs(playersNearby) do
-                        players[GetPlayerServerId(playerNearby)] = true
-                    end
-
-                    ESX.TriggerServerCallback('esx:getPlayerNames', function(returnedPlayers)
-                        for playerId, playerName in pairs(returnedPlayers) do
-                            elements3[#elements3+1] = {
-                                icon = "fas fa-user",
-                                title = playerName,
-                                playerId = playerId
-                            }
-                        end
-
-                        ESX.OpenContext("right", elements3, function(menu3,element3)
-                            local selectedPlayer, selectedPlayerId = GetPlayerFromServerId(element3.playerId), element3.playerId
-                            playersNearby = ESX.Game.GetPlayersInArea(GetEntityCoords(playerPed), 3.0)
-                            playersNearby = ESX.Table.Set(playersNearby)
-
-                            if playersNearby[selectedPlayer] then
-                                local selectedPlayerPed = GetPlayerPed(selectedPlayer)
-
-                                if IsPedOnFoot(selectedPlayerPed) and not IsPedFalling(selectedPlayerPed) then
-                                    if type == 'item_weapon' then
-                                        TriggerServerEvent('esx:giveInventoryItem', selectedPlayerId, type, item, nil)
-                                        ESX.CloseContext()
-                                    else
-                                        local elementsG = {
-                                            {unselectable = true, icon = "fas fa-trash", title = element.title},
-                                            {icon = "fas fa-tally", title = "Amount.", input = true, inputType = "number", inputPlaceholder = "Amount to give..", inputMin = 1, inputMax = 1000},
-                                            {icon = "fas fa-check-double", title = "Confirm", val = "confirm"}
-                                        }
-
-                                        ESX.OpenContext("right", elementsG, function(menuG,elementG)
-                                            local quantity = tonumber(menuG.eles[2].inputValue)
-
-                                            if quantity and quantity > 0 and element.count >= quantity then
-                                                TriggerServerEvent('esx:giveInventoryItem', selectedPlayerId, type, item, quantity)
-                                                ESX.CloseContext()
-                                            else
-                                                ESX.ShowNotification(TranslateCap('amount_invalid'))
-                                            end
-                                        end)
-                                    end
-                                else
-                                    ESX.ShowNotification(TranslateCap('in_vehicle'))
-                                end
-                            else
-                                ESX.ShowNotification(TranslateCap('players_nearby'))
-                                ESX.CloseContext()
-                            end
-                        end)
-                    end, players)
-                end
-            elseif element2.action == "remove" then
-                if IsPedOnFoot(playerPed) and not IsPedFalling(playerPed) then
-                    local dict, anim = 'weapons@first_person@aim_rng@generic@projectile@sticky_bomb@', 'plant_floor'
-                    ESX.Streaming.RequestAnimDict(dict)
-
-                    if type == 'item_weapon' then
-                        ESX.CloseContext()
-                        TaskPlayAnim(playerPed, dict, anim, 8.0, 1.0, 1000, 16, 0.0, false, false, false)
-                        RemoveAnimDict(dict)
-                        Wait(1000)
-                        TriggerServerEvent('esx:removeInventoryItem', type, item)
-                    else
-                        local elementsR = {
-                            {unselectable = true, icon = "fas fa-trash", title = element.title},
-                            {icon = "fas fa-tally", title = "Amount.", input = true, inputType = "number", inputPlaceholder = "Amount to remove..", inputMin = 1, inputMax = 1000},
-                            {icon = "fas fa-check-double", title = "Confirm", val = "confirm"}
-                        }
-
-                        ESX.OpenContext("right", elementsR, function(menuR,elementR)
-                            local quantity = tonumber(menuR.eles[2].inputValue)
-
-                            if quantity and quantity > 0 and element.count >= quantity then
-                                ESX.CloseContext()
-                                TaskPlayAnim(playerPed, dict, anim, 8.0, 1.0, 1000, 16, 0.0, false, false, false)
-                                RemoveAnimDict(dict)
-                                Wait(1000)
-                                TriggerServerEvent('esx:removeInventoryItem', type, item, quantity)
-                            else
-                                ESX.ShowNotification(TranslateCap('amount_invalid'))
-                            end
-                        end)
-                    end
-                end
-            elseif element2.action == "use" then
-                ESX.CloseContext()
-                TriggerServerEvent('esx:useItem', item)
-            elseif element2.action == "return" then
-                ESX.CloseContext()
-                ESX.ShowInventory()
-            elseif element2.action == "give_ammo" then
-                local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
-                local closestPed = GetPlayerPed(closestPlayer)
-                local pedAmmo = GetAmmoInPedWeapon(playerPed, joaat(item))
-
-                if IsPedOnFoot(closestPed) and not IsPedFalling(closestPed) then
-                    if closestPlayer ~= -1 and closestDistance < 3.0 then
-                        if pedAmmo > 0 then
-                            local elementsGA = {
-                                {unselectable = true, icon = "fas fa-trash", title = element.title},
-                                {icon = "fas fa-tally", title = "Amount.", input = true, inputType = "number", inputPlaceholder = "Amount to give..", inputMin = 1, inputMax = 1000},
-                                {icon = "fas fa-check-double", title = "Confirm", val = "confirm"}
-                            }
-
-                            ESX.OpenContext("right", elementsGA, function(menuGA,elementGA)
-                                local quantity = tonumber(menuGA.eles[2].inputValue)
-
-                                if quantity and quantity > 0 then
-                                    if pedAmmo >= quantity then
-                                        TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(closestPlayer), 'item_ammo', item, quantity)
-                                        ESX.CloseContext()
-                                    else
-                                        ESX.ShowNotification(TranslateCap('noammo'))
-                                    end
-                                else
-                                    ESX.ShowNotification(TranslateCap('amount_invalid'))
-                                end
-                            end)
-                        else
-                            ESX.ShowNotification(TranslateCap('noammo'))
-                        end
-                    else
-                        ESX.ShowNotification(TranslateCap('players_nearby'))
-                    end
-                else
-                    ESX.ShowNotification(TranslateCap('in_vehicle'))
-                end
-            end
-        end)
-    end)
-end
-
-RegisterNetEvent('esx:serverCallback', function(requestId,invoker, ...)
-    if Core.ServerCallbacks[requestId] then
-        Core.ServerCallbacks[requestId](...)
-        Core.ServerCallbacks[requestId] = nil
-    else 
-        print('[^1ERROR^7] Server Callback with requestId ^5'.. requestId ..'^7 Was Called by ^5'.. invoker .. '^7 but does not exist.')
-    end
-end)
-
 RegisterNetEvent('esx:showNotification')
 AddEventHandler('esx:showNotification', function(msg, type, length)
     ESX.ShowNotification(msg, type, length)
@@ -1328,3 +896,26 @@ RegisterNetEvent('esx:showHelpNotification')
 AddEventHandler('esx:showHelpNotification', function(msg, thisFrame, beep, duration)
     ESX.ShowHelpNotification(msg, thisFrame, beep, duration)
 end)
+
+---@param model number|string
+---@return string
+function ESX.GetVehicleType(model)
+    model = type(model) == 'string' and joaat(model) or model
+
+	if model == `submersible` or model == `submersible2` then
+        return 'submarine'
+	end
+
+	local vehicleType = GetVehicleClassFromName(model)
+	local types = {
+		[8] = "bike",
+		[11] = "trailer",
+		[13] = "bike",
+		[14] = "boat",
+		[15] = "heli",
+		[16] = "plane",
+		[21] = "train",
+	}
+
+    return types[vehicleType] or "automobile"
+end

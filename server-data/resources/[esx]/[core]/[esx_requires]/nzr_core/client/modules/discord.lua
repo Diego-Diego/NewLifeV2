@@ -11,8 +11,8 @@ AddEventHandler('InitClientScript:discord', function()
             SetDiscordRichPresenceAsset('discord_logo')
             SetDiscordRichPresenceAssetText('NewLife')
 
-            SetDiscordRichPresenceAction(0, ">> |🐌 Rejoindre 🐌| <<", "fivem://connect/YourIpHere")
-            SetDiscordRichPresenceAction(1, ">> |🔗 Discord 🔗| <<", "https://discord.gg/xxxx")
+            SetDiscordRichPresenceAction(0, ">> |🐌 Rejoindre 🐌| <<", "fivem://connect/cfx.re/join/ajevek")
+            SetDiscordRichPresenceAction(1, ">> |🔗 Discord 🔗| <<", "https://discord.gg//6vHBX2WBxB")
 
             Citizen.Wait(60000)
         end

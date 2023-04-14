@@ -1,6 +1,6 @@
 if GetResourceState('es_extended') == 'missing' then return end
 
-local groups = { 'job', 'job2' }
+local groups = { 'job', 'faction' }
 local playerGroups = {}
 local usingOxInventory = GetResourceState('ox_inventory') ~= 'missing'
 PlayerItems = {}
@@ -45,9 +45,9 @@ RegisterNetEvent('esx:setJob', function(job)
     playerGroups.job = job
 end)
 
-RegisterNetEvent('esx:setJob2', function(job)
+RegisterNetEvent('esx:setFaction', function(faction)
     if source == '' then return end
-    playerGroups.job2 = job
+    playerGroups.faction = faction
 end)
 
 RegisterNetEvent('esx:addInventoryItem', function(name, count)

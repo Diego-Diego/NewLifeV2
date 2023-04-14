@@ -23,16 +23,7 @@ end, true, {help = TranslateCap('command_setjob'), validate = true, arguments = 
 	{name = 'grade', help = TranslateCap('command_setjob_grade'), type = 'number'}
 }})
 
-local upgrades = Config.SpawnVehMaxUpgrades and
-    {
-        plate = "ADMINCAR",
-        modEngine = 3,
-        modBrakes = 2,
-        modTransmission = 2,
-        modSuspension = 3,
-        modArmor = true,
-        windowTint = 1
-    } or {}
+local upgrades = {}
 
 ESX.RegisterCommand('car', 'admin', function(xPlayer, args, showError)
 	if not xPlayer then

@@ -172,6 +172,29 @@ INSERT INTO `datastore_data` (`id`, `name`, `owner`, `data`) VALUES
 	(12, 'user_mask', '467826b1f966aed6683f462c40b5cea8ad5b1a22', '{}');
 /*!40000 ALTER TABLE `datastore_data` ENABLE KEYS */;
 
+-- Listage de la structure de la table newlifev2. dpkeybinds
+CREATE TABLE IF NOT EXISTS `dpkeybinds` (
+  `id` varchar(50) DEFAULT NULL,
+  `keybind1` varchar(50) DEFAULT 'num4',
+  `emote1` varchar(255) DEFAULT '',
+  `keybind2` varchar(50) DEFAULT 'num5',
+  `emote2` varchar(255) DEFAULT '',
+  `keybind3` varchar(50) DEFAULT 'num6',
+  `emote3` varchar(255) DEFAULT '',
+  `keybind4` varchar(50) DEFAULT 'num7',
+  `emote4` varchar(255) DEFAULT '',
+  `keybind5` varchar(50) DEFAULT 'num8',
+  `emote5` varchar(255) DEFAULT '',
+  `keybind6` varchar(50) DEFAULT 'num9',
+  `emote6` varchar(255) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Listage des données de la table newlifev2.dpkeybinds : ~0 rows (environ)
+/*!40000 ALTER TABLE `dpkeybinds` DISABLE KEYS */;
+INSERT INTO `dpkeybinds` (`id`, `keybind1`, `emote1`, `keybind2`, `emote2`, `keybind3`, `emote3`, `keybind4`, `emote4`, `keybind5`, `emote5`, `keybind6`, `emote6`) VALUES
+	('license:467826b1f966aed6683f462c40b5cea8ad5b1a22', 'num4', '', 'num5', '', 'num6', '', 'num7', '', 'num8', '', 'num9', '');
+/*!40000 ALTER TABLE `dpkeybinds` ENABLE KEYS */;
+
 -- Listage de la structure de la table newlifev2. fine_types
 CREATE TABLE IF NOT EXISTS `fine_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -397,6 +420,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `job` varchar(20) DEFAULT 'unemployed',
   `job_grade` int(11) DEFAULT 0,
   `loadout` longtext DEFAULT NULL,
+  `metadata` longtext DEFAULT NULL,
   `position` longtext DEFAULT NULL,
   `firstname` varchar(16) DEFAULT NULL,
   `lastname` varchar(16) DEFAULT NULL,
@@ -415,12 +439,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `pincode` int(11) DEFAULT NULL,
   PRIMARY KEY (`identifier`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Listage des données de la table newlifev2.users : ~1 rows (environ)
+-- Listage des données de la table newlifev2.users : ~0 rows (environ)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`identifier`, `accounts`, `group`, `inventory`, `job`, `job_grade`, `loadout`, `position`, `firstname`, `lastname`, `dateofbirth`, `sex`, `height`, `skin`, `status`, `is_dead`, `id`, `disabled`, `last_property`, `created_at`, `last_seen`, `phone_number`, `pincode`) VALUES
-	('467826b1f966aed6683f462c40b5cea8ad5b1a22', '{"bank":3000,"black_money":0,"money":7500}', 'admin', '[{"name":"money","count":7500,"slot":1},{"name":"bread","count":5,"slot":2},{"name":"water","count":5,"slot":3}]', 'unemployed', 0, '[]', '{"heading":255.11810302734376,"z":29.2799072265625,"y":-991.2791137695313,"x":-242.09669494628907}', 'Diego', 'Anderson', '09/02/1999', 'm', 160, '{"chin_3":0,"shoes_1":0,"jaw_2":0,"bproof_1":0,"eyebrows_5":0,"blemishes_2":0,"sex":0,"sun_2":0,"eyebrows_1":0,"chain_2":0,"lipstick_2":0,"torso_2":0,"blemishes_1":0,"ears_1":-1,"torso_1":0,"age_1":0,"blush_1":0,"decals_1":0,"makeup_4":0,"bags_2":0,"nose_3":0,"lipstick_1":0,"bracelets_1":-1,"beard_3":0,"eyebrows_4":0,"arms":0,"chin_2":0,"bproof_2":0,"shoes_2":0,"decals_2":0,"helmet_1":-1,"skin_md_weight":50,"chest_2":0,"glasses_2":0,"moles_1":0,"mask_2":0,"nose_5":0,"chest_1":0,"chin_1":0,"lip_thickness":0,"chin_4":0,"eyebrows_2":0,"neck_thickness":0,"chain_1":0,"dad":0,"jaw_1":0,"cheeks_3":0,"makeup_1":0,"arms_2":0,"sun_1":0,"mask_1":0,"age_2":0,"hair_1":0,"chest_3":0,"beard_2":0,"lipstick_3":0,"nose_4":0,"bodyb_4":0,"hair_2":0,"bracelets_2":0,"bodyb_1":-1,"cheeks_2":0,"cheeks_1":0,"lipstick_4":0,"complexion_2":0,"watches_1":-1,"bodyb_2":0,"blush_3":0,"blush_2":0,"bodyb_3":-1,"tshirt_2":0,"nose_2":0,"bags_1":0,"hair_color_2":0,"helmet_2":0,"eye_squint":0,"moles_2":0,"nose_6":0,"tshirt_1":0,"nose_1":0,"face_md_weight":50,"eye_color":0,"complexion_1":0,"pants_1":0,"hair_color_1":0,"beard_4":0,"watches_2":0,"makeup_2":0,"eyebrows_3":0,"pants_2":0,"glasses_1":0,"mom":21,"eyebrows_6":0,"ears_2":0,"makeup_3":0,"beard_1":0}', '{"hunger":940500,"thirst":955375,"drunk":0,"health":200,"armor":0}', 0, 8, 0, NULL, '2023-03-31 20:41:27', '2023-03-31 20:51:56', NULL, NULL);
+INSERT INTO `users` (`identifier`, `accounts`, `group`, `inventory`, `job`, `job_grade`, `loadout`, `metadata`, `position`, `firstname`, `lastname`, `dateofbirth`, `sex`, `height`, `skin`, `status`, `is_dead`, `id`, `disabled`, `last_property`, `created_at`, `last_seen`, `phone_number`, `pincode`) VALUES
+	('467826b1f966aed6683f462c40b5cea8ad5b1a22', '{"bank":5500,"black_money":0,"money":2600}', 'admin', '[{"name":"money","slot":1,"count":2600}]', 'unemployed', 0, '[]', '[]', '{"heading":102.04724884033203,"x":410.1098937988281,"y":-1020.11865234375,"z":29.3641357421875}', 'Diego', 'Miller', '09/02/1999', 'm', 160, NULL, '{"drunk":0,"health":200,"armor":0,"thirst":720325,"hunger":627100}', 0, 10, 0, NULL, '2023-04-02 15:10:16', '2023-04-10 16:11:49', NULL, NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Listage de la structure de la table newlifev2. user_licenses
@@ -429,10 +453,12 @@ CREATE TABLE IF NOT EXISTS `user_licenses` (
   `type` varchar(60) NOT NULL,
   `owner` varchar(46) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table newlifev2.user_licenses : ~0 rows (environ)
 /*!40000 ALTER TABLE `user_licenses` DISABLE KEYS */;
+INSERT INTO `user_licenses` (`id`, `type`, `owner`) VALUES
+	(9, 'dmv', '467826b1f966aed6683f462c40b5cea8ad5b1a22');
 /*!40000 ALTER TABLE `user_licenses` ENABLE KEYS */;
 
 -- Listage de la structure de la table newlifev2. vehicles

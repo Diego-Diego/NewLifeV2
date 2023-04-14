@@ -1,14 +1,13 @@
-game 'common'
-version '1.9.3'
 fx_version 'cerulean'
-author 'ESX-Framework'
-lua54 'yes'
-loadscreen 'index.html'
+game 'gta5'
 
-shared_script 'config.lua'
+client_script 'client.lua'
 
-loadscreen_manual_shutdown "yes"
+loadscreen_cursor 'yes'
+loadscreen 'html/index.html'
 
-client_script 'client/client.lua'
-
-files {'index.html', './vid/*.mp4', './vid/*.webm', './js/index.js', './css/index.css'}
+files {
+    'html/index.html',
+    'html/assets/**/*.*',
+    'html/assets/**/**/*.*'
+}

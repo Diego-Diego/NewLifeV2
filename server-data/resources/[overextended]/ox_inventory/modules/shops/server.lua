@@ -13,7 +13,7 @@ local locations = shared.target and 'targets' or 'locations'
 ---@field metadata? { [string]: any }
 ---@field license? string
 ---@field currency? string
----@field grade? number
+---@field grade? number | number[]
 ---@field count? number
 
 ---@class OxShopServer : OxShop
@@ -30,7 +30,7 @@ local function setupShopItems(id, shopType, shopName, groups)
 		local slot = shop.items[i]
 
 		if slot.grade and not groups then
-			print(('^1attempted to restrict slot %s (%s) to grade %s, but %s has no job restriction^0'):format(id, slot.name, slot.grade, shopName))
+			print(('^1attempted to restrict slot %s (%s) to grade %s, but %s has no job restriction^0'):format(id, slot.name, json.encode(slot.grade), shopName))
 			slot.grade = nil
 		end
 
@@ -174,11 +174,26 @@ end
 
 local TriggerEventHooks = require 'modules.hooks.server'
 
+local function isRequiredGrade(grade, rank)
+	if type(grade) == "table" then
+		for i=1, #grade do
+			if grade[i] == rank then
+				return true
+			end
+		end
+		return false
+	else
+		return rank >= grade
+	end
+end
+
 lib.callback.register('ox_inventory:buyItem', function(source, data)
 	if data.toType == 'player' then
 		if data.count == nil then data.count = 1 end
 		local playerInv = Inventory(source)
-		local shopType, shopId = string.strsplit(' ', playerInv.open)
+		local shopType, shopId = playerInv.open:match('^(.-) (%d-)$')
+
+		if not shopType then shopType = playerInv.open end
 
 		if shopId then shopId = tonumber(shopId) end
 
@@ -193,12 +208,13 @@ lib.callback.register('ox_inventory:buyItem', function(source, data)
 				elseif data.count > fromData.count then
 					data.count = fromData.count
 				end
-			elseif fromData.license and server.hasLicense and not server.hasLicense(playerInv, fromData.license) then
+			end
+			if fromData.license and server.hasLicense and not server.hasLicense(playerInv, fromData.license) then
 				return false, false, { type = 'error', description = locale('item_unlicensed') }
-
-			elseif fromData.grade then
+			end
+			if fromData.grade then
 				local _, rank = server.hasGroup(playerInv, shop.groups)
-				if fromData.grade > rank then
+				if not isRequiredGrade(fromData.grade, rank) then
 					return false, false, { type = 'error', description = locale('stash_lowgrade') }
 				end
 			end

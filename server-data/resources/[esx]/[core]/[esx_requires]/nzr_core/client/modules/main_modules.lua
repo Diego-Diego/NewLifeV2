@@ -6,7 +6,7 @@ function InitClientScripts.InitScripts(scriptList)
     end
 end
 
-InitClientScripts.InitScripts({"discord", "escape"})
+InitClientScripts.InitScripts({"notify", "discord", "escape", "billing", "service", "society", "status", "login"})
 
 RegisterNetEvent('nzr_core:restartModule')
 AddEventHandler('nzr_core:restartModule', function(moduleName)
